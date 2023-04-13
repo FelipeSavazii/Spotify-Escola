@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MÚSICAS - MANOEL IGNÁCIO DA SILVA</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+    <nav>    
+        <img src="static/img/logo-governo-do-estado-sp-negativo-1.png" />
+        <button id="login">Entrar</button>
+    </nav>
+    <main>
+        <h1>PEI MANOEL IGNÁCIO DA SILVA</h1>
+        <form method="POST" action="/api/v1/suggestion" id="form">
+            <h2>Faça a sua sugestão de música.</h2>
+            <div class="form-div">
+                <label for="turno">TURNO*</label>
+                <input type="text" name="turno" id="turno" style="display: none;" />
+                <div class="buttons">
+                    <button id="EF" type="button" aria-selected="false">Fundamental</button>
+                    <button id="EM" type="button" aria-selected="false">Médio</button>
+                </div>
+            </div>
+            <div class="form-div">
+                <label for="musica">NOME DA MÚSICA*</label>
+                <input type="text" name="musica" id="musica" />
+            </div>
+            <div class="form-div">
+                <label for="cantor">NOME DO CANTOR/COMPOSITOR*</label>
+                <input type="text" name="cantor" id="cantor" />
+            </div>
+            <button class="form-submit-button" id="Submit" type="button">Enviar</button>
+        </form>
+    </main>
+    <footer>
+        <p>Desenvolvido por <a href="https://felipesavazi.com/">Felipe Savazi</a></p>
+    </footer>
+    <script>
+        const EF = document.getElementById('EF');
+        const EM = document.getElementById('EM');
+        const turno = document.getElementById('turno');
+        const Submit = document.getElementById('Submit');
+        EF.addEventListener('click', () => {
+            const EFSelected = EF.getAttribute('aria-selected')
+            const EMSelected = EM.getAttribute('aria-selected')
+
+            if (EFSelected == 'false') {
+                EF.setAttribute('aria-selected', 'true');
+                EF.style.backgroundColor = '#FF161E';
+                EF.style.color = '#FFFFFF';
+                turno.value = 'EF';
+                console.log(turno.value);
+                if (EMSelected == 'true') {
+                    EM.setAttribute('aria-selected', 'false');
+                    EM.style.backgroundColor = '#FFFFFF';
+                    EM.style.color = '#FF161E';
+                }
+            } else {
+                EF.setAttribute('aria-selected', 'false');
+                EF.style.backgroundColor = '#FFFFFF';
+                EF.style.color = '#FF161E';
+                turno.value = '';
+                console.log(turno.value);
+            }
+        });
+        EM.addEventListener('click', () => {
+            const EFSelected = EF.getAttribute('aria-selected')
+            const EMSelected = EM.getAttribute('aria-selected')
+
+            if (EMSelected == 'false') {
+                EM.setAttribute('aria-selected', 'true');
+                EM.style.backgroundColor = '#FF161E';
+                EM.style.color = '#FFFFFF';
+                turno.value = 'EM';
+                console.log(turno.value);
+                if (EFSelected == 'true') {
+                    EF.setAttribute('aria-selected', 'false');
+                    EF.style.backgroundColor = '#FFFFFF';
+                    EF.style.color = '#FF161E';
+                }
+            } else {
+                EM.setAttribute('aria-selected', 'false');
+                EM.style.backgroundColor = '#FFFFFF';
+                EM.style.color = '#FF161E';
+                turno.value = '';
+                console.log(turno.value);
+            }
+        });
+        Submit.addEventListener('click', () => {
+            const EFSelected = EF.getAttribute('aria-selected')
+            const EMSelected = EM.getAttribute('aria-selected')
+
+            const musica = document.getElementById('musica').value;
+            const cantor = document.getElementById('cantor').value;
+            if (EFSelected == 'true' || EMSelected == 'true') {
+                if (musica != '' && cantor != '') {
+                    document.getElementById('form').submit()
+                } else {
+                   alert('Preencha todos os campos!');
+                }
+            } else {
+                alert('Selecione um turno.');
+            }
+        });
+    </script>
+</body>
+</html>
